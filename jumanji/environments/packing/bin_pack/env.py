@@ -103,7 +103,7 @@ class BinPack(Environment[State]):
     ```python
     from jumanji.environments import BinPack
     env = BinPack()
-    key = jax.random.key(0)
+    key = jax.random.PRNGKey(0)
     state, timestep = jax.jit(env.reset)(key)
     env.render(state)
     action = env.action_spec().generate_value()
@@ -317,6 +317,7 @@ class BinPack(Environment[State]):
                 - invalid_ems_from_env (optional): True if the environment produced an EMS that was
                     invalid. Only available in debug mode.
         """
+        
         action_is_valid = state.action_mask[tuple(action)]  # type: ignore
 
         obs_ems_id, item_id = action

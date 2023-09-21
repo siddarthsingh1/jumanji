@@ -60,10 +60,6 @@ from jumanji.training.networks.multi_cvrp.actor_critic import (
     make_actor_critic_networks_multicvrp,
 )
 from jumanji.training.networks.multi_cvrp.random import make_random_policy_multicvrp
-from jumanji.training.networks.pacman.actor_critic import (
-    make_actor_critic_networks_pacman,
-)
-from jumanji.training.networks.pacman.random import make_random_policy_pacman
 from jumanji.training.networks.robot_warehouse.actor_critic import (
     make_actor_critic_networks_robot_warehouse,
 )
@@ -78,6 +74,10 @@ from jumanji.training.networks.snake.actor_critic import (
     make_actor_critic_networks_snake,
 )
 from jumanji.training.networks.snake.random import make_random_policy_snake
+from jumanji.training.networks.sokoban.actor_critic import (
+    make_actor_critic_networks_sokoban,
+)
+from jumanji.training.networks.sokoban.random import make_random_policy_sokoban
 from jumanji.training.networks.sudoku.actor_critic import (
     make_cnn_actor_critic_networks_sudoku,
     make_equivariant_actor_critic_networks_sudoku,

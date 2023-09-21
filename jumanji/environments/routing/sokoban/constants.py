@@ -12,12 +12,25 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from jumanji.training.networks.masked_categorical_random import (
-    masked_categorical_random,
-)
-from jumanji.training.networks.protocols import RandomPolicy
+import jax.numpy as jnp
 
+# Translating actions to coordinate changes
+MOVES = jnp.array([[-1, 0], [1, 0], [0, -1], [0, 1]])
 
-def make_random_policy_pacman() -> RandomPolicy:
-    """Make random policy for the `Maze` environment."""
-    return masked_categorical_random
+# Object encodings
+EMPTY = 0
+WALL = 1
+TARGET = 2
+AGENT = 3
+BOX = 4
+TARGET_AGENT = 5
+TARGET_BOX = 6
+
+# Environment Variables
+N_BOXES = 4
+GRID_SIZE = 10
+
+# Reward Function
+LEVEL_COMPLETE_BONUS = 10
+SINGLE_BOX_BONUS = 1
+STEP_BONUS = -0.1

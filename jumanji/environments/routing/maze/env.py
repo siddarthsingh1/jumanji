@@ -68,7 +68,7 @@ class Maze(Environment[State]):
     ```python
     from jumanji.environments import Maze
     env = Maze()
-    key = jax.random.key(0)
+    key = jax.random.PRNGKey(0)
     state, timestep = jax.jit(env.reset)(key)
     env.render(state)
     action = env.action_spec().generate_value()
@@ -272,13 +272,13 @@ class Maze(Environment[State]):
         """
 
         def is_move_valid(agent_position: Position, move: chex.Array) -> chex.Array:
-            row, col = jnp.array([agent_position.row, agent_position.col]) + move
+            x, y = jnp.array([agent_position.row, agent_position.col]) + move
             return (
-                (row >= 0)
-                & (row < self.num_rows)
-                & (col >= 0)
-                & (col < self.num_cols)
-                & ~(walls[row, col])
+                (x >= 0)
+                & (x < self.num_cols)
+                & (y >= 0)
+                & (y < self.num_rows)
+                & ~(walls[x, y])
             )
 
         # vmap over the moves.

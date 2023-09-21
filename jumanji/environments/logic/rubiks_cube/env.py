@@ -72,7 +72,7 @@ class RubiksCube(Environment[State]):
     ```python
     from jumanji.environments import RubiksCube
     env = RubiksCube()
-    key = jax.random.key(0)
+    key = jax.random.PRNGKey(0)
     state, timestep = jax.jit(env.reset)(key)
     env.render(state)
     action = env.action_spec().generate_value()
@@ -147,6 +147,7 @@ class RubiksCube(Environment[State]):
             next_state: `State` corresponding to the next state of the environment.
             next_timestep: `TimeStep` corresponding to the timestep returned by the environment.
         """
+
         flattened_action = flatten_action(
             unflattened_action=action, cube_size=self.generator.cube_size
         )

@@ -143,16 +143,16 @@ class TestNestedSpec:
         assert isinstance(triply_nested, TriplyNested)
 
     def test_spec__replace(self, triply_nested_spec: specs.Spec) -> None:
-        arg_list = ["bounded_array", "doubly_nested", "doubly_nested", "discrete_array"]
+        arg_list = ["doubly_nested", "bounded_array", "discrete_array"]
         modified_specs = [
             triply_nested_spec["bounded_array"].replace(name="wrong_name"),
             triply_nested_spec["doubly_nested"].replace(
-                discrete_array=triply_nested_spec["doubly_nested"][
-                    "discrete_array"
-                ].replace(num_values=2)
+                y=triply_nested_spec["doubly_nested"]["discrete_array"].replace(
+                    num_values=2
+                )
             ),
             triply_nested_spec["doubly_nested"].replace(
-                singly_nested=triply_nested_spec["doubly_nested"][
+                doubly_nested=triply_nested_spec["doubly_nested"][
                     "singly_nested"
                 ].replace(
                     bounded_array=triply_nested_spec["doubly_nested"]["singly_nested"][

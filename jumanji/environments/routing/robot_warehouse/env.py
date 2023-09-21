@@ -251,6 +251,12 @@ class RobotWarehouse(Environment[State]):
         # check for invalid action -> turn into noops
         actions = utils.get_valid_actions(action, state.action_mask)
 
+        # check for agent collisions
+        collisions = jax.vmap(functools.partial(utils.is_collision, grid))(
+            agents, actions
+        )
+        collision = jnp.any(collisions)
+
         # update agents, shelves and grid
         def update_state_scan(
             carry_info: Tuple[chex.Array, chex.Array, chex.Array, int], action: int
@@ -264,12 +270,6 @@ class RobotWarehouse(Environment[State]):
         (grid, agents, shelves, _), _ = jax.lax.scan(
             update_state_scan, (grid, agents, shelves, 0), actions
         )
-
-        # check for agent collisions
-        collisions = jax.vmap(functools.partial(utils.is_collision, grid))(
-            agents, self.agent_ids
-        )
-        collision = jnp.any(collisions)
 
         # compute shared reward for all agents and update request queue
         # if a requested shelf has been successfully delivered to the goal
@@ -454,7 +454,7 @@ class RobotWarehouse(Environment[State]):
         Returns:
             a random key, updated reward, request queue and shelves.
         """
-        y, x = goal
+        x, y = goal
         shelf_id = grid[_SHELVES, x, y]
 
         def reward_and_update_request_queue_if_shelf_in_goal(
@@ -491,12 +491,10 @@ class RobotWarehouse(Environment[State]):
             return key, reward, request_queue, shelves
 
         # check if shelf is at goal position and in request queue
-        shelf_at_goal = (~jnp.equal(shelf_id, 0)) & jnp.isin(
-            shelf_id, request_queue + 1
-        )
+        cond = (shelf_id != 0) & jnp.isin(shelf_id, request_queue + 1)
 
         key, reward, request_queue, shelves = jax.lax.cond(
-            shelf_at_goal,
+            cond,
             reward_and_update_request_queue_if_shelf_in_goal,
             lambda k, r, rq, g, _: (k, r, rq, g),
             key,

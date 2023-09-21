@@ -20,6 +20,7 @@ from jumanji.environments.logic.graph_coloring.env import GraphColoring
 from jumanji.environments.logic.minesweeper import Minesweeper
 from jumanji.environments.logic.rubiks_cube import RubiksCube
 from jumanji.environments.logic.sudoku import Sudoku
+from jumanji.environments.logic.sliding_tile_puzzle.env import SlidingTilePuzzle
 from jumanji.environments.packing import bin_pack, job_shop, knapsack, tetris
 from jumanji.environments.packing.bin_pack.env import BinPack
 from jumanji.environments.packing.job_shop.env import JobShop
@@ -32,9 +33,10 @@ from jumanji.environments.routing import (
     maze,
     mmst,
     multi_cvrp,
-    pacman,
     robot_warehouse,
     snake,
+    pacman,
+    sokoban,
     tsp,
 )
 from jumanji.environments.routing.cleaner.env import Cleaner
@@ -43,9 +45,9 @@ from jumanji.environments.routing.cvrp.env import CVRP
 from jumanji.environments.routing.maze.env import Maze
 from jumanji.environments.routing.mmst.env import MMST
 from jumanji.environments.routing.multi_cvrp import MultiCVRP
-from jumanji.environments.routing.pacman.env import PacMan
 from jumanji.environments.routing.robot_warehouse.env import RobotWarehouse
 from jumanji.environments.routing.snake.env import Snake
+from jumanji.environments.routing.sokoban.env import Sokoban
 from jumanji.environments.routing.tsp.env import TSP
 
 
